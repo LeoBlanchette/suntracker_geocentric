@@ -1,0 +1,149 @@
+[gd_scene load_steps=5 format=3 uid="uid://cdos4toli1xdh"]
+
+[ext_resource type="PackedScene" uid="uid://d111tmp5k0ow2" path="res://scenes/spinning_globe/spinning_globe.tscn" id="1_5o6ld"]
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_nb6fm"]
+[ext_resource type="Texture2D" uid="uid://b73ysqy0ut8ka" path="res://textures/canvas.png" id="3_gfx4r"]
+[ext_resource type="Script" path="res://scenes/ui.gd" id="3_i7oxd"]
+
+[node name="Main" type="Node3D" node_paths=PackedStringArray("ui", "spinning_globe", "sun_ray_cast_3d")]
+script = ExtResource("1_nb6fm")
+ui = NodePath("UI")
+spinning_globe = NodePath("SpinningGlobe")
+sun_ray_cast_3d = NodePath("SunRayCast3D")
+
+[node name="UI" type="Control" parent="." node_paths=PackedStringArray("total_secons_input", "play_button", "stop_button", "seconds_elapsed_label", "seconds_remaining_label", "percentage_complete_label")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("3_i7oxd")
+total_secons_input = NodePath("MarginContainerTop/HBoxContainer/HBoxContainer/SecondsInAYear")
+play_button = NodePath("MarginContainerTop/HBoxContainer/PlayButton")
+stop_button = NodePath("MarginContainerTop/HBoxContainer/StopButton")
+seconds_elapsed_label = NodePath("MarginContainerBottom/HBoxContainer/SecondsElapsed")
+seconds_remaining_label = NodePath("MarginContainerBottom/HBoxContainer/Secondsremaining")
+percentage_complete_label = NodePath("MarginContainerBottom/HBoxContainer/PercentageComplete")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ProjectedTextureRect" type="TextureRect" parent="UI/MarginContainer"]
+custom_minimum_size = Vector2(512, 512)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+texture = ExtResource("3_gfx4r")
+expand_mode = 3
+
+[node name="MarginContainerTop" type="MarginContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 66.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainerTop"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainerTop/HBoxContainer"]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/MarginContainerTop/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Seconds in a Year:"
+fit_content = true
+
+[node name="SecondsInAYear" type="LineEdit" parent="UI/MarginContainerTop/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "3600"
+placeholder_text = "3600"
+
+[node name="PlayButton" type="Button" parent="UI/MarginContainerTop/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Play
+"
+
+[node name="StopButton" type="Button" parent="UI/MarginContainerTop/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Stop
+"
+
+[node name="MarginContainerBottom" type="MarginContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -66.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainerBottom"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="SecondsElapsed" type="RichTextLabel" parent="UI/MarginContainerBottom/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Time Passed"
+fit_content = true
+
+[node name="Secondsremaining" type="RichTextLabel" parent="UI/MarginContainerBottom/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Time Passed"
+fit_content = true
+
+[node name="PercentageComplete" type="RichTextLabel" parent="UI/MarginContainerBottom/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Time Passed"
+fit_content = true
+
+[node name="SpinningGlobe" parent="." instance=ExtResource("1_5o6ld")]
+seconds_in_a_year = 360.0
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, 0, 2.126)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="SunRayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, 0)
+target_position = Vector3(2, 0, 0)
+collide_with_areas = true

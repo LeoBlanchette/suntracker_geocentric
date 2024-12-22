@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://d111tmp5k0ow2"]
+
+[ext_resource type="Script" path="res://scenes/spinning_globe/spinning_globe.gd" id="1_wbc1e"]
+[ext_resource type="PackedScene" uid="uid://qv8f2m2d3uby" path="res://models/globe_model.blend" id="2_pf2x2"]
+
+[node name="SpinningGlobe" type="Node3D" node_paths=PackedStringArray("sphere_mesh_instance_3d")]
+script = ExtResource("1_wbc1e")
+sphere_mesh_instance_3d = NodePath("globe_model/Sphere")
+
+[node name="globe_model" parent="." instance=ExtResource("2_pf2x2")]
+
+[editable path="globe_model"]
